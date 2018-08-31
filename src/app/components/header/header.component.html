@@ -1,0 +1,27 @@
+<div class='navbar navbar-default' id='navbar' style="margin-top: -15px">
+  <a class='navbar-brand' href='#'>
+    <i class='icon-beer'></i>
+    <img src="assets/images/alcaldia.png" width="220px" height="50px">
+  </a>
+  <ul class='nav navbar-nav pull-right'>
+    <li>
+      <a class='navbar-brand' href='#'>
+        <i class='icon-beer'></i>
+        <img src="assets/images/dtmu.png" width="280px" height="50">
+      </a>
+    </li>
+    <li class='dropdown user' style="padding-top: 15px">
+      <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+        <i class='icon-user'></i>
+        <strong>{{user.nombre}}</strong>
+        <i class='fa fa-caret-down' style="font-size: 20px; padding: 0px 10px 0px 10px"></i>
+      </a>
+      <ul class='dropdown-menu'>        
+        <li class='divider'></li>
+        <li>
+          <a href="#" (click)="logout($event)">Cerrar Session</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

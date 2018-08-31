@@ -1,0 +1,66 @@
+<app-header></app-header>
+<div id='wrapper'>
+  <app-sidebar></app-sidebar>
+  <section id='tools'>
+    <ul class='breadcrumb' id='breadcrumb'>
+      <li class='title'>Listado de beneficiarios</li>
+      <li>Direccion de Tecnologias y Mejoramiento Urbano</li>
+    </ul>
+    <div id='toolbar'>
+      <div style="font-weight: 600; color: #1abc9c; padding-top: 10px">
+        PLATA FORMA DE PAGO PARA PERSONAS CON DISCAPACIDAD
+      </div>
+    </div>
+  </section>
+
+  <div id='content'>
+    <div class="col-md-12">
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <i class='fa fa-list'></i>
+          BENEFICIARIOS REGISTRADOS EN EL SISTEMA
+        </div>
+        <div class='panel-body'>
+          <div class='row'>
+            <div class="col-md-12">
+              <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>CI</th>
+                    <th>Nombre y Apellido</th>
+                    <th>Fecha nacimiento</th>
+                    <th>Carnet Discapacidad</th>
+                    <th>Tipo Discapacidad</th>
+                    <th>Vence</th>
+                    <th>Tipo Per. Ref.</th>
+                    <th>Per. Ref.</th>
+                    <th>Editar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let beneficiario of beneficiarios">
+                    <td>{{ beneficiario.ci }}</td>
+                    <td>{{ beneficiario.nombre }} {{ beneficiario.apellido || ''}}</td>
+                    <td>{{ beneficiario.fec_nac }}</td>
+                    <td>{{ beneficiario.carnet_discapacidad }}</td>
+                    <td>{{ beneficiario.tipo_discapacidad }}</td>
+                    <td>{{ beneficiario.vence }}</td>
+                    <td>{{ beneficiario.caso_ser }}</td>
+                    <td>{{ beneficiario.nombre_ser }} {{ beneficiario.apellido_ser || ' '}}</td>
+                    <td>
+                      <a class="btn btn-success" data-toggle="tooltip" [routerLink]="['/update-beneficiario/', beneficiario.id]" title="" data-original-title="Editar">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="beneficiarios?.length == 0">
+                    <td colspan="9" class="no-data-available">No data!</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

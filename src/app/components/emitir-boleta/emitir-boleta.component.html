@@ -1,0 +1,149 @@
+<app-header></app-header>
+<div id='wrapper'>
+  <app-sidebar></app-sidebar>
+  <section id='tools'>
+    <ul class='breadcrumb' id='breadcrumb'>
+      <li class='title'>Emision de boletas de pago</li>
+      <li>Direccion de Tecnologias y Mejoramiento Urbano</li>
+    </ul>
+    <div id='toolbar'>
+      <div style="font-weight: 600; color: #1abc9c; padding-top: 10px">
+        PLATA FORMA DE PAGO PARA PERSONAS CON DISCAPACIDAD
+      </div>
+    </div>
+  </section>
+  <!-- Content -->
+  <div id='content'>
+    <div class="col-md-6">
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <i class='fa fa-user'></i>
+          Pago del Bono Municipal para PcD
+        </div>
+        <div class='panel-body'>
+          <div class='row'>
+            <div class="form-group col-md-6">
+              <label class="control-label">Carnet de identidad</label>
+              <input type="text" class="form-control" placeholder="Ej. 8415719" #box (keyup.enter)="search(box.value)" required>
+            </div>
+
+            <div *ngIf="beneficiario">
+              <div class="form-group col-md-6">
+                <label class="control-label">Nombre PcD</label>
+                <input type="text" readonly class="form-control" [value]="beneficiario.nombre">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label class="control-label">Carnet de discapacidad</label>
+                <input type="text" readonly class="form-control" [value]="beneficiario.carnet_discapacidad">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label class="control-label">Vence</label>
+                <input type="text" readonly class="form-control" [value]="beneficiario.vence">
+              </div>
+
+              <div class="form-group col-md-8">
+                <label class="control-label">Nombre del Tutor</label>
+                <input type="text" readonly class="form-control" [value]="beneficiario.tutor">
+              </div>
+
+              <div class="form-group col-md-4">
+                <label class="control-label">C.I. Tutor</label>
+                <input type="text" readonly class="form-control" [value]="beneficiario.ci_tutor">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <i class='fa fa-id-card-o'></i>
+          Boletas de pago
+        </div>
+        <div class='panel-body'>
+          <div class='row'>
+            <div *ngIf="beneficiario">
+              <div class="form-group col-md-12">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr style="color: #1abc9c; font-size: 17px; font-weight: bold;">
+                      <th colspan="2">ESTADO</th>
+                      <th>N° BOLETA</th>
+                      <th>N° PLANILLA </th>
+                      <th>EMITIDO POR </th>
+                      <th>IMPRIMIR </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let mes of beneficiario.meses.data" [ngClass]="{'success':mes.estado === 'HABILITADO', 'danger':mes.estado === 'INHABILITADO'}">
+                      <td align="center">
+                        <h4 style="font-weight: bold">{{ mes.nombre_mes }}</h4>
+                      </td>
+                      <td align="center">
+                        <div class="form-group" [ngClass]="{'has-success':mes.estado === 'HABILITADO', 'has-error':mes.estado === 'INHABILITADO'}">
+                          <h4 class="control-label" style="font-weight: bold">{{ mes.estado }}</h4>
+                        </div>
+                      </td>
+                      <td align="center" style="width: 280px;">
+                        <div class="form-group col-md-12">
+                          <input *ngIf="mes.boleta.data.length > 0" style="font-weight: bold; font-size: 20px; text-align: center;" type="text" [value]="mes.boleta.data[0].id"
+                            readonly class="form-control">
+                          <button *ngIf="mes.boleta.data.length == 0 && mes.estado === 'HABILITADO' " class="btn btn-primary" type="button" (click)="confirmar_generar_boleta(mes.nombre_mes, mes.id)">Emitir
+                            Boleta
+                          </button>
+
+                          <dl *ngIf="mes.boleta.data.length == 0 && mes.estado === 'INHABILITADO' ">
+                            <dt>Observacion</dt>
+                            <dd>{{ mes.observacion }}</dd>
+                          </dl>
+                        </div>
+                      </td>
+                      <td align="center" style="width: 240px;">
+                        <input style="font-weight: bold; font-size: 20px; text-align: center;" type="text" [value]="mes.nro_planilla" readonly class="form-control">
+                      </td>
+                      <td align="center" style="width: 240px;">
+                        <label *ngIf="mes.boleta.data[0]">{{ mes.boleta.data[0].usuario }}</label>
+                      </td>
+                      <td align="center">
+                        <a href="http://localhost/uapd2/public/api/imprimir_boleta_mes/{{mes.id}}" target="_blank" *ngIf="mes.boleta.data.length > 0"
+                          class="btn btn-info" type="submit">
+                          <i class="fa fa-print" aria-hidden="true"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Confirmar</h4>
+      </div>
+      <div class="modal-body">
+        <p id="text-mes"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="emitir_boleta()">Emitir</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->
+<!--http://172.16.0.49/uapd2/api/imprimir_boleta_mes-->

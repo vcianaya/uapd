@@ -1,0 +1,99 @@
+<app-header></app-header>
+<div id='wrapper'>
+  <app-sidebar></app-sidebar>
+  <section id='tools'>
+    <ul class='breadcrumb' id='breadcrumb'>
+      <li class='title'>Habilitación y/o Deshabilitación de beneficiarios</li>
+      <li>Direccion de Tecnologias y Mejoramiento Urbano</li>
+    </ul>
+    <div id='toolbar'>
+      <div style="font-weight: 600; color: #1abc9c; padding-top: 10px">
+        PLATA FORMA DE PAGO PARA PERSONAS CON DISCAPACIDAD
+      </div>
+    </div>
+  </section>
+  <!-- Content -->
+  <div id='content'>
+    <div class="col-md-6">
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <i class='fa fa-file-excel-o'></i>
+          Actualización masiva de beneficiarios
+        </div>
+        <div class='panel-body'>
+          <div class='row'>
+            <div class="col-md-12">
+              <form role="form" [formGroup]="actulizacionFrm" novalidate (ngSubmit)="upload_formulario();" enctype="multipart/form-data">
+                <div class="form-group col-md-6" [class.has-error]="actulizacionFrm.controls.estado.invalid && actulizacionFrm.controls.estado.touched">
+                  <label class="control-label">Estado
+                    <i>*</i>
+                  </label>
+                  <select class="form-control" formControlName="estado">
+                    <option value="">Elija una opcion</option>
+                    <option value="1">HABILITADO</option>
+                    <option value="0">INHABILITADO</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-6" [class.has-error]="actulizacionFrm.controls.mes.invalid && actulizacionFrm.controls.mes.touched">
+                  <label class="control-label">Mes
+                    <i>*</i>
+                  </label>
+                  <select class="form-control" formControlName="mes">
+                    <option value="">Elija una opcion</option>
+                    <option value="1">ENERO</option>                   
+                    <option value="2">FEBRERO</option>                   
+                    <option value="3">MARZO</option>                   
+                    <option value="4">ABRIL</option>                   
+                    <option value="5">MAYO</option>                   
+                    <option value="6">JUNIO</option>                   
+                    <option value="7">JULIO</option>                   
+                    <option value="8">AGOSTO</option>                   
+                    <option value="9">SEPTIEMBRE</option>                   
+                    <option value="10">OCTUBRE</option>                   
+                    <option value="11">NOVIEMBRE</option>                   
+                    <option value="12">DICIEMBRE</option>                   
+                  </select>
+                </div>
+
+                <div class="form-group col-md-6" [class.has-error]="actulizacionFrm.controls.tipo.invalid && actulizacionFrm.controls.tipo.touched">
+                  <label class="control-label">TIPO DE BOLETA
+                    <i>*</i>
+                  </label>
+                  <select class="form-control" formControlName="tipo">
+                    <option value="">Elija una opcion</option>
+                    <option value="COBRO REGULAR">COBRO REGULAR</option>
+                    <option value="RETROACTIVO">RETROACTIVO</option>
+                   
+                  </select>
+                </div>
+
+                <div class="form-group col-md-12" [class.has-error]="actulizacionFrm.controls.file.invalid && actulizacionFrm.controls.file.touched">
+                  <label class="control-label">Archivo excel
+                    <i class="fa fa-file-excel-o"></i>
+                  </label>
+                  <input type="file" class="form-control" (change)="onFileChange($event)">
+                </div>
+                <div class="form-group col-md-6">
+                  <button type="submit" class="btn btn-primary" [disabled]="!actulizacionFrm.valid">   
+                    <i class="fa fa-database"></i> Actualizar</button>
+                </div>
+              </form>
+              <br>
+              <blockquote class="col-md-12">
+                <p>
+                  <i class="fa fa-warning"></i> Actualizacion masiva de datos.</p>
+                <footer>Mediante este formulario se habilitan y/o deshabilitan los beneficiarios para cada mes, desde un archivo
+                  excel que puede descargarlo desde el siguiente enlace.
+                  <cite title="Source Title">
+                    <a href="">Descargar formato excel</a>
+                  </cite>
+                </footer>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

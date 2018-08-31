@@ -1,0 +1,485 @@
+<app-header></app-header>
+<div id='wrapper'>
+  <app-sidebar></app-sidebar>
+  <section id='tools'>
+    <ul class='breadcrumb' id='breadcrumb'>
+      <li class='title'>Actualizar datos del Beneficiario</li>
+      <li>Direccion de Tecnologias y Mejoramiento Urbano</li>
+    </ul>
+    <div id='toolbar'>
+      <div style="font-weight: 600; color: #1abc9c; padding-top: 10px">
+        PLATA FORMA DE PAGO PARA PERSONAS CON DISCAPACIDAD
+      </div>
+    </div>
+  </section>
+  <!-- Content -->
+  <div id='content'>
+    <form role="form" [formGroup]="beneficiarioFrm" (ngSubmit)="updateBeneficiario();">
+      <div class="col-md-6">
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            <i class='fa fa-user'></i>
+            Datos del beneficiario
+          </div>
+          <div class='panel-body'>
+            <div class='row'>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.nombre.invalid && beneficiarioFrm.controls.nombre.touched">
+                <label class="control-label">Nombre
+                  <i>*</i>
+                </label>
+                <input type="text" formControlName="nombre" class="form-control" placeholder="Ej. Juan">
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.nombre.invalid && beneficiarioFrm.controls.nombre.touched">El nombre es requerido.</span>
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.apellido.invalid && beneficiarioFrm.controls.apellido.touched">
+                <label class="control-label">Apellido
+                  <i>*</i>
+                </label>
+                <input type="text" formControlName="apellido" class="form-control" placeholder="Ej. Mamani">
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.apellido.invalid && beneficiarioFrm.controls.apellido.touched">El apellido es requerido.</span>
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.ci.invalid && beneficiarioFrm.controls.ci.touched">
+                <label class="control-label">Cedula de identidad
+                  <i>*</i>
+                </label>
+                <input type="text" formControlName="ci" class="form-control">
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.ci.invalid && beneficiarioFrm.controls.ci.touched">El CI es requerido.</span>
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.genero.invalid && beneficiarioFrm.controls.genero.touched">
+                <label class="control-label">Genero
+                  <i>*</i>
+                </label>
+                <div class="radio">
+                  <label>
+                    <input type="radio" formControlName="genero" value="MASCULINO"> MASCULINO
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" formControlName="genero" value="FEMENINO"> FEMENINO
+                  </label>
+                </div>
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.genero.invalid && beneficiarioFrm.controls.genero.touched">El genero es requerido.</span>
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.fec_nac.invalid && beneficiarioFrm.controls.fec_nac.touched">
+                <label class="control-label">Fecha de nacimiento
+                  <i>*</i>
+                </label>
+                <input type="date" formControlName="fec_nac" class="form-control">
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.fec_nac.invalid && beneficiarioFrm.controls.fec_nac.touched">La fecha de nacimiento es requerida.</span>
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.lugar_nacimiento.invalid && beneficiarioFrm.controls.lugar_nacimiento.touched">
+                <label>Lugar de nacimiento
+                  <i>*</i>
+                </label>
+                <input type="text" formControlName="lugar_nacimiento" class="form-control" placeholder="Ej. Prov. Murillo ">
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.fec_nac.invalid && beneficiarioFrm.controls.fec_nac.touched">La fecha de nacimiento.</span>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label class="control-label">Domicilio</label>
+                <input type="text" formControlName="domicilio" class="form-control" placeholder="Ej. El Alto Rio Seco Estrellas de Belen #225.....">
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.distrito.invalid && beneficiarioFrm.controls.distrito.touched">
+                <label class="control-label">Distrito
+                  <i>*</i>
+                </label>
+                <select class="form-control" formControlName="distrito" (change)="onChangeDistrito($event.target.value)">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                </select>
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.distrito.invalid && beneficiarioFrm.controls.distrito.touched">El distrito es requerido.</span>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Zona</label>
+                <select class="form-control zona_beneficiario" formControlName="zona">
+                  <option value="">Elija una zona</option>
+                  <option *ngFor="let zona of zona" [value]="zona.id">{{zona.nombre_urbanizacion}}</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.estado_civil.invalid && beneficiarioFrm.controls.estado_civil.touched">
+                <label class="control-label">Estado Civil
+                  <i>*</i>
+                </label>
+                <div class="radio">
+                  <label style="padding-right: 10px; font-weight: bold;">
+                    <input type="radio" formControlName="estado_civil" value="Soltero"> Soltero
+                  </label>
+                  <label style="padding-right: 10px; font-weight: bold;">
+                    <input type="radio" formControlName="estado_civil" value="Casado"> Casado
+                  </label>
+                  <label style="padding-right: 10px; font-weight: bold;">
+                    <input type="radio" formControlName="estado_civil" value="Conyuge"> Conyuge
+                  </label>
+                  <label style="padding-right: 10px; font-weight: bold;">
+                    <input type="radio" formControlName="estado_civil" value="Divorciado"> Divorciado
+                  </label>
+                  <label style="padding-right: 10px; font-weight: bold;">
+                    <input type="radio" formControlName="estado_civil" value="Viudo"> Viudo
+                  </label>
+                </div>
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.estado_civil.invalid && beneficiarioFrm.controls.estado_civil.touched">El estado civil es requerido.</span>
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.grado_instruccion.invalid && beneficiarioFrm.controls.grado_instruccion.touched">
+                <label class="control-label">Grado de instruccion
+                  <i>*</i>
+                </label>
+                <select class="form-control" formControlName="grado_instruccion">
+                  <option value="Ninguno">Ninguno</option>
+                  <option value="Lee y escribe">Lee y escribe</option>
+                  <option value="Bachiller">Bachiller</option>
+                  <option value="Tecnico">Tecnico</option>
+                  <option value="Profesional">Profesional</option>
+                </select>
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.grado_instruccion.invalid && beneficiarioFrm.controls.grado_instruccion.touched">El grado de instruccion es requerido.</span>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label class="control-label">Ocupacion</label>
+                <input type="text" formControlName="ocupacion" class="form-control" placeholder="Ej. Chofer">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Telefono</label>
+                <input type="text" formControlName="telefono" class="form-control" placeholder="Ej. 74000672">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Correo</label>
+                <input type="email" formControlName="email" class="form-control" placeholder="Ej. vcianaya@gmail.com">
+              </div>
+
+              <div class="form-group col-md-12" [class.has-error]="beneficiarioFrm.controls.tipo_discapacidad.invalid && beneficiarioFrm.controls.tipo_discapacidad.touched">
+                <label class="control-label">Tipo de discapacidad
+                  <i>*</i>
+                </label>
+                <div class="radio">
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="tipo_discapacidad" value="Auditiva"> Auditiva
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="tipo_discapacidad" value="Fisica"> Fisica
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="tipo_discapacidad" value="Intelectual"> Intelectual
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="tipo_discapacidad" value="Psiquica"> Psiquica
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="tipo_discapacidad" value="Visual"> Visual
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="tipo_discapacidad" value="Multiple"> Multiple
+                  </label>
+                </div>
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.tipo_discapacidad.invalid && beneficiarioFrm.controls.tipo_discapacidad.touched">Especifique el tipo de discapacidad.</span>
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.carnet_discapacidad.invalid && beneficiarioFrm.controls.carnet_discapacidad.touched">
+                <label class="control-label">Carnet de discapacidad
+                  <i>*</i>
+                </label>
+                <input type="text" formControlName="carnet_discapacidad" class="form-control">
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.carnet_discapacidad.invalid && beneficiarioFrm.controls.carnet_discapacidad.touched">El carnet de discapacidad es requerido.</span>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Deficiencia</label>
+                <input type="text" formControlName="deficiencia" class="form-control">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Porcentaje de deficiencia (%)</label>
+                <input type="number" formControlName="porcentaje_discapacidad" class="form-control">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Vence</label>
+                <input type="date" formControlName="vence" class="form-control">
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.ayuda_tecnica.invalid && beneficiarioFrm.controls.ayuda_tecnica.touched">
+                <label class="control-label">Usa Ayuda Tecnica
+                  <i>*</i>
+                </label>
+                <div class="radio">
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="ayuda_tecnica" value="SI" checked=""> SI
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="ayuda_tecnica" value="NO"> NO
+                  </label>
+                </div>
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.ayuda_tecnica.invalid && beneficiarioFrm.controls.ayuda_tecnica.touched">Elija una opcion.</span>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Tipo de ayuda tecnica</label>
+                <div class="radio">
+                  <label style="font-weight: bold;">
+                    <input type="radio" formControlName="tipo_ayuda_tecnica" value="Lentes" checked=""> Lentes
+                  </label>
+                  <label style="font-weight: bold;">
+                    <input type="radio" formControlName="tipo_ayuda_tecnica" value="Audifonos"> Audifonos
+                  </label>
+                  <label style="font-weight: bold;">
+                    <input type="radio" formControlName="tipo_ayuda_tecnica" value="Muletas"> Muletas
+                  </label>
+                  <label style="font-weight: bold;">
+                    <input type="radio" formControlName="tipo_ayuda_tecnica" value="Silla de rueda"> silla de rueda
+                  </label>
+                  <label style="font-weight: bold;">
+                    <input type="radio" formControlName="tipo_ayuda_tecnica" value="Baston"> Baston
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group col-md-12">
+                <label>Otro</label>
+                <input type="text" formControlName="otro_ayuda_tecnica" class="form-control">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Tratamieto y/o rehabilitacion</label>
+                <input type="text" formControlName="tratamiento_rehabilitacion" class="form-control">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Describir Tratamieto rehabilitacion</label>
+                <input type="text" formControlName="tratamiento_descripcion" class="form-control">
+              </div>
+
+              <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.vivienda.invalid && beneficiarioFrm.controls.vivienda.touched">
+                <label class="control-label">Cuenta con vivienda
+                  <i>*</i>
+                </label>
+                <div class="radio">
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="vivienda" value="Otro" checked=""> Otro
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="vivienda" value="Propia"> Propia
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="vivienda" value="Alquiler"> Alquiler
+                  </label>
+                  <label style="padding-right: 14px; font-size: 18px; font-weight: bold;">
+                    <input type="radio" formControlName="vivienda" value="Anticretico"> Anticretico
+                  </label>
+                </div>
+                <span class="help-block" *ngIf="beneficiarioFrm.controls.vivienda.invalid && beneficiarioFrm.controls.vivienda.touched">Elija una opcion.</span>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Otro</label>
+                <input type="text" formControlName="vivienda_otro" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            <i class='fa fa-user'></i>
+            Datos de la persona de referencia
+          </div>
+          <div class='panel-body'>
+            <div class='row'>
+              <div class="form-group col-md-12">
+                <label class="control-label">En caso de ser</label>
+                <div class="radio">
+                  <label style="padding-right: 14px; font-size: 14px; font-weight: bold;">
+                    <input type="radio" formControlName="caso_ser" (change)="caso_ser_change($event)" value="Ninguno" checked="" class="ninguno"> Ninguno
+                  </label>
+                  <label style="padding-right: 14px; font-size: 14px; font-weight: bold;">
+                    <input type="radio" formControlName="caso_ser" (change)="caso_ser_change($event)" value="Padre" class="referencia"> Padre
+                  </label>
+                  <label style="padding-right: 14px; font-size: 14px; font-weight: bold;">
+                    <input type="radio" formControlName="caso_ser" (change)="caso_ser_change($event)" value="Madre" class="referencia"> Madre
+                  </label>
+                  <label style="padding-right: 14px; font-size: 14px; font-weight: bold;">
+                    <input type="radio" formControlName="caso_ser" (change)="caso_ser_change($event)" value="Conyuge" class="referencia"> Conyuge
+                  </label>
+                  <label style="padding-right: 14px; font-size: 14px; font-weight: bold;">
+                    <input type="radio" formControlName="caso_ser" (change)="caso_ser_change($event)" value="Tutor" class="referencia"> Tutor
+                  </label>
+                  <label style="padding-right: 14px; font-size: 14px; font-weight: bold;">
+                    <input type="radio" formControlName="caso_ser" (change)="caso_ser_change($event)" value="Persona de referencia" class="referencia"> Persona de referencia
+                  </label>
+                </div>
+              </div>
+              <div *ngIf="showPersona">
+                <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.nombre_ser.invalid && beneficiarioFrm.controls.nombre_ser.touched">
+                  <label class="control-label">Nombre
+                    <i>*</i>
+                  </label>
+                  <input type="text" formControlName="nombre_ser" class="form-control" placeholder="Ej. Juan">
+                  <span class="help-block" *ngIf="beneficiarioFrm.controls.nombre_ser.invalid && beneficiarioFrm.controls.nombre_ser.touched">El nombre es requerido.</span>
+                </div>
+                <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.apellido_ser.invalid && beneficiarioFrm.controls.apellido_ser.touched">
+                  <label class="control-label">Apellido
+                    <i>*</i>
+                  </label>
+                  <input type="text" formControlName="apellido_ser" class="form-control" placeholder="Ej. Mamani">
+                  <span class="help-block" *ngIf="beneficiarioFrm.controls.apellido_ser.invalid && beneficiarioFrm.controls.apellido_ser.touched">El apellido es requerido.</span>
+                </div>
+
+                <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.ci_ser.invalid && beneficiarioFrm.controls.ci_ser.touched">
+                  <label class="control-label">Cedula de identidad
+                    <i>*</i>
+                  </label>
+                  <input type="text" formControlName="ci_ser" class="form-control">
+                  <span class="help-block" *ngIf="beneficiarioFrm.controls.ci_ser.invalid && beneficiarioFrm.controls.ci_ser.touched">El ci es requerido.</span>
+                </div>
+
+                <div class="form-group col-md-6" [class.has-error]="beneficiarioFrm.controls.genero_ser.invalid && beneficiarioFrm.controls.genero_ser.touched">
+                  <label class="control-label">Genero</label>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" formControlName="genero_ser" value="MASCULINO"> MASCULINO
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" formControlName="genero_ser" value="FEMENINO"> FEMENINO
+                    </label>
+                  </div>
+                  <span class="help-block" *ngIf="beneficiarioFrm.controls.genero_ser.invalid && beneficiarioFrm.controls.genero_ser.touched">Elija una opcion.</span>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Fecha de nacimiento</label>
+                  <input type="date" formControlName="fec_nac_ser" class="form-control">
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Domicilio</label>
+                  <input type="text" formControlName="domicilio_ser" class="form-control" placeholder="Ej. El Alto Rio Seco Estrellas de Belen #225.....">
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Distrito</label>
+                  <select class="form-control" formControlName="distrito_ser" (change)="onChangeDistritoSer($event.target.value)">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Zona</label>
+                  <select class="form-control zona_persona" formControlName="zona_ser">
+                    <option value="">Elija una zona</option>
+                    <option *ngFor="let zona of zonaSer" [value]="zona.id">{{zona.nombre_urbanizacion}}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Estado Civil</label>
+                  <div class="radio">
+                    <label style="padding-right: 10px; font-weight: bold;">
+                      <input type="radio" formControlName="estado_civil_ser" value="Soltero" checked=""> Soltero
+                    </label>
+                    <label style="padding-right: 10px; font-weight: bold;">
+                      <input type="radio" formControlName="estado_civil_ser" value="Casado"> Casado
+                    </label>
+                    <label style="padding-right: 10px; font-weight: bold;">
+                      <input type="radio" formControlName="estado_civil_ser" value="Conyuge"> Conyuge
+                    </label>
+                    <label style="padding-right: 10px; font-weight: bold;">
+                      <input type="radio" formControlName="estado_civil_ser" value="Divorciado"> Divorciado
+                    </label>
+                    <label style="padding-right: 10px; font-weight: bold;">
+                      <input type="radio" formControlName="estado_civil_ser" value="Viudo"> Viudo
+                    </label>
+
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Grado de instruccion</label>
+                  <select class="form-control" formControlName="grado_instruccion_ser">
+                    <option value="Ninguno">Ninguno</option>
+                    <option value="Lee y escribe">Lee y escribe</option>
+                    <option value="Bachiller">Bachiller</option>
+                    <option value="Tecnico">Tecnico</option>
+                    <option value="Profesional">Profesional</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Ocupacion</label>
+                  <input type="text" formControlName="ocupacion_ser" class="form-control" placeholder="Ej. Chofer">
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Telefono</label>
+                  <input type="text" formControlName="telefono_ser" class="form-control" placeholder="Ej. 74000672">
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Correo</label>
+                  <input type="email" formControlName="email_ser" class="form-control" placeholder="Ej. vcianaya@gmail.com">
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Observaciones</label>
+                <textarea class="form-control" formControlName="observaciones_ser" rows="3" placeholder="Observaciones ..."></textarea>
+              </div>
+
+              <div class="form-group col-md-12">
+                <label>Lugar</label>
+                <input type="text" formControlName="lugar" class="form-control" placeholder="Ej. El Alto Rio Seco Estrellas de Belen #225.....">
+              </div>
+              <div class="form-group col-md-12">
+                <agm-map [mapTypeControl]="'true'" [latitude]="-16.506602830615456" [longitude]="-68.1624944201966" [zoom]="14" (mapClick)="marker($event)">
+                  <agm-marker [latitude]="beneficiarioFrm.value.latitud" [longitude]="beneficiarioFrm.value.longitud"></agm-marker>
+                </agm-map>
+              </div>
+              <div class="box-footer col-md-12">
+                <a class="btn btn-warning btn-block" (click)="cancelar()">
+                  <i class="fa fa-long-arrow-left"></i> CANCELAR</a>
+                <button type="submit" class="btn btn-primary btn-block" [disabled]="!beneficiarioFrm.valid">
+                  <i class="fa fa-pencil-square-o"></i> ACTUALIZAR</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

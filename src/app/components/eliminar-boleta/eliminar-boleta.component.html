@@ -1,0 +1,158 @@
+<app-header></app-header>
+<div id='wrapper'>
+  <app-sidebar></app-sidebar>
+  <section id='tools'>
+    <ul class='breadcrumb' id='breadcrumb'>
+      <li class='title'>Eliminar boleta</li>
+      <li>Direccion de Tecnologias y Mejoramiento Urbano</li>
+    </ul>
+    <div id='toolbar'>
+      <div style="font-weight: 600; color: #1abc9c; padding-top: 10px">
+        PLATA FORMA DE PAGO PARA PERSONAS CON DISCAPACIDAD
+      </div>
+    </div>
+  </section>
+  <!-- Content -->
+  <div id='content'>
+    <div class="row">
+      <div class="col-md-4">
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            <i class='fa fa-search'></i>
+            Buscar boleta
+          </div>
+          <div class='panel-body'>
+            <div class='row'>
+              <div class="form-group col-md-6">
+                <label class="control-label">Nro. Boleta</label>
+                <input type="text" class="form-control" placeholder="Ej. 8415719" #box (keyup.enter)="search(box.value)" required>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8" *ngIf="boleta">
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            <i class='fa fa-address-card-o'></i>
+            Detalle de la boleta
+          </div>
+          <div class='panel-body'>
+            <div class='row'>
+              <div class="form-group col-md-6">
+                <label class="control-label">Nro. Boleta</label>
+                <label class="label-text">{{boleta.id_boleta}}</label>
+              </div>
+      
+              <div class="form-group col-md-6">
+                <label class="control-label">Mes</label>
+                <label class="label-text">{{ boleta.mes | uppercase}}</label>
+              </div>
+      
+              <div class="form-group col-md-6">
+                <label class="control-label">C.I.</label>
+                <label class="label-text">{{boleta.ci}}</label>
+              </div>
+      
+              <div class="form-group col-md-6">
+                <label class="control-label">Nro. Carnet Discapacidad {{'Vence '+boleta.vence}}</label>
+                <label class="label-text">{{boleta.carnet_discapacidad}}</label>
+              </div>
+      
+              <div class="form-group col-md-12">
+                <label class="control-label">Beneficiario</label>
+                <label class="label-text">{{boleta.nombre+' '+boleta.apellido}}</label>
+              </div>
+      
+              <div class="form-group col-md-12">
+                <label class="control-label">Emitido por</label>
+                <label class="label-text">{{boleta.user_name+' '+boleta.user_apellido}}</label>
+              </div>
+      
+              <div class="form-group col-md-12">
+                <label class="control-label">Fecha Emision</label>
+                <label class="label-text">{{boleta.created_at}}</label>
+              </div>
+      
+              <div class="form-group col-md-12">
+                <label class="control-label">Motivo</label>
+                <textarea class="form-control" [(ngModel)]="motivo" placeholder="Detalle aqui el motivo por el cual la boleta ser eliminada"
+                  rows="4"></textarea>
+              </div>
+      
+              <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-danger btn-block" (click)="confirmar_eliminar_boleta()" [disabled]="motivo.length==0">
+                  <i class="fa fa-ban"></i> Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            <i class='fa fa-address-card-o'></i>
+            BOLETAS DE PAGO ANULADAS
+          </div>
+          <div class='panel-body'>
+            <div class='row'>
+              <div class="form-group col-md-12">
+                <table id="boleta_anuladas_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table">
+                  <thead>
+                    <tr>
+                      <th>Nro. Boleta</th>
+                      <th>C.I.</th>
+                      <th>Beneficiario</th>
+                      <th>Carnet Discapacidad</th>
+                      <th>Vence</th>
+                      <th>Fecha Emision</th>
+                      <th>Emitido Por</th>
+                      <th>Detalle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of boletas_eliminadas" class="danger">
+                      <td align="center">{{item.nro_boleta}}</td>
+                      <td>{{item.ci}}</td>
+                      <td>{{item.beneficiario}}</td>
+                      <td>{{item.carnet_discapacidad}}</td>
+                      <td>{{item.vence}}</td>
+                      <td>{{item.fecha_emision}}</td>
+                      <td>{{item.emitido_por}}</td>
+                      <td>{{item.observacion}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Confirmar</h4>
+      </div>
+      <div class="modal-body">
+        <p id="text-mes"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="eliminar_boleta()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

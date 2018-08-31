@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+
+.has-error span{
+  font-size: 12px;
+  padding-left: 10px;
+}
+.form-group label i {
+  color: red;
+}
+.dataTables_empty {
+  display: none;
+}
